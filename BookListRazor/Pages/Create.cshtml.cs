@@ -32,7 +32,7 @@ namespace BookListRazor.Pages.BookList
             // We don't have to pass the empty Book object, it does that automatically
             // We will be able to access this Book inside the Create view
         }
-
+        [HttpGet]
         public JsonResult GetCategoryListByCategoryId(string ctype)
         {
             var data = _db.Category.Where(x => x.NameToken == ctype).ToList();

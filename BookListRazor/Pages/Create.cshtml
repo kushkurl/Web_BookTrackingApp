@@ -101,22 +101,19 @@
             getCategoryListByCategoryId();
         });
         var getCategoryListByCategoryId = function () {
-            $.ajax({
-                url: '@Url.Action("GetCategoryListByCategoryId", "Create")',
-                type: 'GET',
-                data: {
-                    ctype: $('#cType').val(),
-                },
-                success: function (data) {
-                    $('#category').find('option').remove();
-                    $(data).each(
-                        function (index, item) {
-                            $('#category').append('<option value="' + item.subCategoryName + '">' + item.subCategoryName + '</option>');
-                        });
-                },
-                error: function () {
-                }
+
+            var url = '@Url.Content("~/")' + "Create/GetCategoryListByCategoryId";
+            var ddlsource = "#cType";
+            $.getJSON(url, { ctype: $(ddlsource).val() }, function (data) {
+                var items = "";
+                $("#category").empty();
+                $.each(data, function (i, item) {
+                    items += "<option value='" + item.value + "'>" + item.text + "</option>";
+                    $('#category').html(items);
+                });
             });
+
+
         }
     </script>
     <partial name="_ValidationScriptsPartial" />
