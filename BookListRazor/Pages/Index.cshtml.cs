@@ -15,6 +15,8 @@ namespace BookListRazor.Pages.BookList
         private readonly ApplicationDbContext _db;
 
         public IEnumerable<Book> Books { get; set; }
+    
+
 
         // We are getting db using dependency injection
         // Extracting ApplicationDbContext inside the dependency injection container and injecting onto this page
@@ -30,6 +32,9 @@ namespace BookListRazor.Pages.BookList
         {
             // Assigning all books from database to Books
             Books = await _db.Book.ToListAsync();
+
+            
+
         }
 
         // It will be a post handler because it is a button

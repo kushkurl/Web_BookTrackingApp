@@ -39,10 +39,11 @@ namespace BookListRazor.Model
 
     public class CategoryType
     {
-        [Key, ForeignKey("Book")]
+        
         
         public ICollection<Category> Type { get; set; }
         [Key]
+        [ForeignKey("Category")]
         public string Name { get; set; }
 
     }
