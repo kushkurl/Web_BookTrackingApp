@@ -1,34 +1,6 @@
 ﻿@page
 @model BookListRazor.Pages.BookList.CreateModel
-@section Scripts{
-    <script type="text/javascript">
-     $(document).ready(function () {
-         getCategoryListByCategoryId();
-    })
-    $("#cType").change(function () {
-        getCategoryListByCategoryId();
-    });
-        var getCategoryListByCategoryId = function () {
-         $.ajax({
-            url: '@Url.Action("GetCategoryListByCategoryId", "Create")',
-            type: 'GET',
-            data: {
-                categoryId:$('#cType').val(),
-            },
-            success: function (data) {
-                $('#category').find('option').remove()
-                $(data).each(
-                    function (index, item) {
-                        $('#category').append('<option value="' + item.subCategoryName + '">' + item.subCategoryName + '</option>')
-                    });
-            },
-            error: function () {
-            }
-           });
-    
 
-    </script>
-}
 
 
 <br />
@@ -86,17 +58,17 @@
             </div>
 
             <div class="col-6">
-                <select id="cType" asp-items="@(new SelectList(Model.CategoryType,"Name","Name"))" class="form-control">                   
+                <select id="cType" asp-items="@(new SelectList(Model.CategoryType,"Name","Name"))" class="form-control">
                 </select>
             </div>
         </div>
         <div class="form-group row">
             <div class="col-3">
-                <label asp-for="Book.CId" ></label>
+                <label>Category</label>
             </div>
 
             <div class="col-6">
-                <select id="category" asp-for="Book.CId" asp-items="@(new SelectList(Model.Category,"NameToken","NameToken"))" class="form-control" />
+                <select id="category" asp-items="@(new SelectList(Model.Category,"NameToken","NameToken"))" class="form-control" />
             </div>
 
             <span asp-validation-for="Book.CId" class="text-danger"></span>
@@ -120,6 +92,33 @@
 </div>
 
 <!-- We want validations to be done on the client side without going to post handler unnecessarily -->
-@section Scripts{ 
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            getCategoryListByCategoryId();
+        });
+        $("#cType").change(function () {
+            getCategoryListByCategoryId();
+        });
+        var getCategoryListByCategoryId = function () {
+            $.ajax({
+                url: '@Url.Action("GetCategoryListByCategoryId", "Create")',
+                type: 'GET',
+                data: {
+                    ctype: $('#cType').val(),
+                },
+                success: function (data) {
+                    $('#category').find('option').remove();
+                    $(data).each(
+                        function (index, item) {
+                            $('#category').append('<option value="' + item.subCategoryName + '">' + item.subCategoryName + '</option>');
+                        });
+                },
+                error: function () {
+                }
+            });
+        }
+    </script>
     <partial name="_ValidationScriptsPartial" />
+
 }

@@ -14,6 +14,12 @@ namespace BookListRazor.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
+        protected override void OnConfiguring(DbContextOptionsBuilder builder)
+        {
+            builder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=BookListRazorDB;Integrated Security=true;");
+
+            //builder.UseSqlite(@"Data Source=c:\Temp\mydb/db");
+        }
 
         // In order to add any model to the database, we need an entry here
         public DbSet<Book> Book { get; set; }
@@ -34,12 +40,13 @@ namespace BookListRazor.Data
             var categoryType = new CategoryType[]
            {
                 new CategoryType { Name = "Fictional" },
-                new CategoryType { Name = "Friday Sale" }
+                new CategoryType { Name = "Non-Fictional" }
            };
             var allcType = from c in context.CategoryType select c;
             context.CategoryType.RemoveRange(allcType);
             context.SaveChanges();
-            foreach (CategoryType d in allcType)
+
+            foreach (CategoryType d in categoryType)
             {
                 context.CategoryType.Add(d);
             }
@@ -63,11 +70,12 @@ namespace BookListRazor.Data
             context.Category.RemoveRange(allcategory);
             context.SaveChanges();
 
-            foreach (Category i in allcategory)
+            foreach (Category i in category)
             {
                 context.Category.Add(i);
             }
             context.SaveChanges();
+            
 
 
         }

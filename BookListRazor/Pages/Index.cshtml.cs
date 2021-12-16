@@ -22,6 +22,7 @@ namespace BookListRazor.Pages.BookList
         // Extracting ApplicationDbContext inside the dependency injection container and injecting onto this page
         public IndexModel(ApplicationDbContext db)
         {
+            
             ApplicationDbContext.Initialize(db);
             _db = db;
             

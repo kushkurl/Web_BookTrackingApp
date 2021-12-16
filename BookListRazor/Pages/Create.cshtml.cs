@@ -33,7 +33,7 @@ namespace BookListRazor.Pages.BookList
             // We will be able to access this Book inside the Create view
         }
 
-        public JsonResult getCategoryListByCategoryId(string ctype)
+        public JsonResult GetCategoryListByCategoryId(string ctype)
         {
             var data = _db.Category.Where(x => x.NameToken == ctype).ToList();
             return new JsonResult(data);  
